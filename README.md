@@ -56,12 +56,22 @@ Initialize the `speechToText` function with the IDs of your HTML elements:
 
 #### Full Setup  
 ```javascript  
-speechToText('outPut', 'clearBtn', 'startBtn', 'copyBtn', 'langSelection');  
+// by installing
+import { speechToText } from 'speech-into-text';
+speechToText('outPut', 'clearBtn', 'startBtn', 'copyBtn', 'langSelection');
+// using .js file in html <script type="module" src="script.js"></script>
+import { speechToText } from 'https://unpkg.com/speech-into-text@latest/index.js';
+speechToText('outPut', 'clearBtn', 'startBtn', 'copyBtn', 'langSelection'); 
 ```  
 
 #### Minimal Setup  
 ```javascript  
-speechToText('outPut', '', 'startBtn', '', 'langSelection');  
+// by installing
+import { speechToText } from 'speech-into-text';
+speechToText('outPut', '', 'startBtn', '', 'langSelection');
+// using .js file in html <script type="module" src="script.js"></script>
+import { speechToText } from 'https://unpkg.com/speech-into-text@latest/index.js';
+speechToText('outPut', '', 'startBtn', '', 'langSelection'); 
 ```  
 
 ### Required Elements  
