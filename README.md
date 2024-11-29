@@ -126,8 +126,7 @@ This package relies on the **SpeechRecognition API**, which is supported in:
 - **Microsoft Edge**  
 - Other Chromium-based browsers  
 
-**Note**: Ensure HTTPS is enabled, as the API requires a secure context.  
----
+**Note**: Ensure HTTPS is enabled, as the API requires a secure context. 
 
 Developed with ❤️ by [Darpan Adhikari](https://www.darpanadhikari.com.np). 
 ---
