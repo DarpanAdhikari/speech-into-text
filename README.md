@@ -20,13 +20,6 @@ Install the package via NPM:
 npm install speech-into-text  
 ```  
 
-### Using CDN  
-
-Include the package via a CDN if installation is not preferred:  
-```html  
-<script type="module" src="https://unpkg.com/speech-into-text@latest/index.js"></script>  
-```  
-
 ---
 
 ## Getting Started  
@@ -49,28 +42,34 @@ To use **SpeechToText**, ensure the following elements are in your HTML:
   <button id="copyBtn">Copy</button>
 </div>  
 ```  
+### Using CDN  
 
-### Initialization  
+Include the package via a CDN if installation is not preferred:  
+```html  
+<script type="module" src="script.js"></script>  
+```  
+```javascript 
+import { speechToText } from 'https://unpkg.com/speech-into-text@latest/index.js';
+// for full setup
+speechToText('outPut', 'clearBtn', 'startBtn', 'copyBtn', 'langSelection'); 
+// for minimul setup
+speechToText('outPut', '', 'startBtn', '', 'langSelection');
+```
+
+### Using NPM Package
 
 Initialize the `speechToText` function with the IDs of your HTML elements:  
 
 #### Full Setup  
 ```javascript  
-// by installing
 import { speechToText } from 'speech-into-text';
 speechToText('outPut', 'clearBtn', 'startBtn', 'copyBtn', 'langSelection');
-// using .js file in html <script type="module" src="script.js"></script>
-import { speechToText } from 'https://unpkg.com/speech-into-text@latest/index.js';
-speechToText('outPut', 'clearBtn', 'startBtn', 'copyBtn', 'langSelection'); 
+
 ```  
 
 #### Minimal Setup  
 ```javascript  
-// by installing
 import { speechToText } from 'speech-into-text';
-speechToText('outPut', '', 'startBtn', '', 'langSelection');
-// using .js file in html <script type="module" src="script.js"></script>
-import { speechToText } from 'https://unpkg.com/speech-into-text@latest/index.js';
 speechToText('outPut', '', 'startBtn', '', 'langSelection'); 
 ```  
 
