@@ -93,15 +93,16 @@ Incomplete HTML format: Missing output holder or start button or language select
 
 The package supports a variety of languages, including:  
 
-- **English (US)**: `en-US`  
-- **Nepali**: `ne-NP`  
-- **Hindi**: `hi-IN`  
-- **Spanish (Spain)**: `es-ES`  
-- **French (France)**: `fr-FR`  
-- **German (Germany)**: `de-DE`  
-- **Japanese**: `ja-JP`  
-- **Chinese (Mandarin)**: `zh-CN`  
-- **Russian**: `ru-RU`  
+- **English (US)**  
+- **English (UK)**  
+- **Nepali**  
+- **Hindi**  
+- **Spanish**  
+- **French**  
+- **German**  
+- **Japanese**  
+- **Chinese**  
+- **Russian**  
 
 ---
 
