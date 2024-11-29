@@ -1,0 +1,30 @@
+{
+  "name": "speech-into-text",
+  "version": "1.0.0",
+  "description": "Speech to text",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "npm run speak"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DarpanAdhikari/speech-into-text.git"
+  },
+  "keywords": [
+    "speech-to-text",
+    "speech",
+    "text",
+    "into-text"
+  ],
+  "author": "Darpan Adhikari",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/DarpanAdhikari/speech-into-text/issues"
+  },
+  "homepage": "https://github.com/DarpanAdhikari/speech-into-text#readme",
+  "dependencies": {
+    "speech-into-text": "^1.0.0"
+  },
+  "devDependencies": {}
+}
