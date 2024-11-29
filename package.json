@@ -1,7 +1,7 @@
 {
   "name": "speech-into-text",
   "version": "1.0.3",
-  "description": "Speech to text",
+  "description": "SpeechToText is a lightweight, multi-language voice-to-text tool for real-time transcription in web apps.",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -14,8 +14,10 @@
   "keywords": [
     "speech-to-text",
     "speech",
-    "text",
-    "into-text"
+    "transcription",
+    "voice-recognition",
+    "into-text",
+    "multi-language"
   ],
   "author": "Darpan Adhikari",
   "license": "Apache-2.0",
