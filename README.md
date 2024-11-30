@@ -8,6 +8,8 @@
 - **Customizable Controls**: Flexible options to start, stop, clear, and copy text.  
 - **HTML Compatibility**: Works with both `<textarea>` and `<div>` elements for output.  
 - **Lightweight & Flexible**: Easy to set up and adapt to your project needs.  
+- **language Preserve**: Selected language will still selected on reload.  
+- **Clicky Buttons**: CSS is integrated with button to make them clicky.  
 
 ---
 
@@ -31,13 +33,16 @@ To use **SpeechToText**, ensure the following elements are in your HTML:
 ```html  
 <div>  
   <!-- Text Output Area -->
-  <textarea id="outPut" placeholder="Start speaking..." rows="5"></textarea>  
+  <textarea id="outPut" placeholder="Start speaking..." rows="5"></textarea>
+  <!-- works with div or any html tag -->
+  <!-- <div id="outPut"></div> -->
 
   <!-- Language Selector -->
   <select id="langSelection"></select>  
 
   <!-- Control Buttons -->
   <button id="startBtn">Start</button>
+  <!-- ----Optional Buttons----- -->
   <button id="clearBtn">Clear</button>
   <button id="copyBtn">Copy</button>
 </div>  
@@ -48,11 +53,14 @@ Include the package via a CDN if installation is not preferred:
 ```html  
 <script type="module" src="script.js"></script>  
 ```  
+#### Full Setup 
 ```javascript 
 import { speechToText } from 'https://unpkg.com/speech-into-text@latest/index.js';
-// for full setup
 speechToText('outPut', 'clearBtn', 'startBtn', 'copyBtn', 'langSelection'); 
-// for minimul setup
+```
+#### Minimal Setup 
+```javascript
+import { speechToText } from 'https://unpkg.com/speech-into-text@latest/index.js';
 speechToText('outPut', '', 'startBtn', '', 'langSelection');
 ```
 
