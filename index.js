@@ -165,14 +165,13 @@ export async function speechToText(
   });
 
   copyBtnEl?.addEventListener("click", () => {
+    let buttonText = copyBtnEl.innerText.trim();
     if (outputHolder.value.trim() !== "") {
       navigator.clipboard.writeText(outputHolder.value);
       copyBtnEl.textContent = "Copied!";
-      copyBtnEl.classList.add("click");
       setTimeout(() => {
-        copyBtnEl.classList.remove("click");
-        copyBtnEl.textContent = "Copy";
-      }, 3000);
+        copyBtnEl.textContent = buttonText;
+      }, 2000);
     }
   });
   window.addEventListener("beforeunload", (event) => {
