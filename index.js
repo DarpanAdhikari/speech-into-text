@@ -125,7 +125,7 @@ export async function speechToText(
       ) {
         outVal = outputHolder.value.trim();
       }else{
-        outVal = outputHolder.innerText.trim();
+        outVal = outputHolder.innerHTML.trim();
       }
       if(firstAction && outVal !== ''){
         previousData = outVal;
@@ -156,7 +156,7 @@ export async function speechToText(
       }
     } else {
       if (!previousData.endsWith(text.trim())) {
-        outputHolder.innerText = previousData + " " + text;
+        outputHolder.innerHTML = previousData + " " + text;
       }
     }
   };
@@ -171,7 +171,7 @@ export async function speechToText(
       ){
         previousData = outputHolder.value.trim();
       }else{
-        previousData = outputHolder.innerText.trim();
+        previousData = outputHolder.innerHTML.trim();
       }
     }
   };
@@ -182,7 +182,7 @@ export async function speechToText(
     ) {
       previousData = outputHolder.value.trim();
     } else {
-      previousData = outputHolder.innerText.trim();
+      previousData = outputHolder.innerHTML.trim();
     }
   });
   spRec.onerror = (event) => {
@@ -196,13 +196,13 @@ export async function speechToText(
     ) {
       outputHolder.value = "";
     } else {
-      outputHolder.innerText = "";
+      outputHolder.innerHTML = "";
     }
     previousData = "";
   });
 
   copyBtnEl?.addEventListener("click", () => {
-    let buttonText = copyBtnEl.innerText.trim();
+    let buttonText = copyBtnEl.innerHTML.trim();
     let outVal = '';
     if (
       outputHolder.tagName === "INPUT" ||
@@ -210,7 +210,7 @@ export async function speechToText(
     ){
       outVal = outputHolder.value.trim();
     }else{
-      outVal = outputHolder.innerText.trim();
+      outVal = outputHolder.innerHTML.trim();
     }
     if (outVal !== "") {
       navigator.clipboard.writeText(outVal);
