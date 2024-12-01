@@ -154,9 +154,15 @@ export async function speechToText(
       previousData = outputHolder.value.trim();
     }
   };
-  outputHolder.addEventListener('blur',(e)=>{
-      previousData = '';
+  outputHolder.addEventListener('blur', (e) => {
+    if (
+      outputHolder.tagName === "INPUT" ||
+      outputHolder.tagName === "TEXTAREA"
+    ) {
       previousData = outputHolder.value.trim();
+    } else {
+      previousData = outputHolder.innerText.trim();
+    }
   });
   spRec.onerror = (event) => {
     console.error("Speech recognition error", event.error);
