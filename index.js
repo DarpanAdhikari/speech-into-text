@@ -192,17 +192,5 @@ export async function speechToText(
   });
   window.addEventListener("beforeunload", (event) => {
     sessionStorage.setItem("language", langSelect.value);
-    if (
-      outputHolder.tagName === "INPUT" ||
-      outputHolder.tagName === "TEXTAREA"
-    ) {
-      if (outputHolder.value  !== "") {
-        event.preventDefault();
-      }
-    } else {
-      if (outputHolder.innerText !== "") {
-        event.preventDefault();
-      }
-    }
   });
 }
