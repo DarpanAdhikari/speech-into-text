@@ -128,7 +128,7 @@ export async function speechToText(
         outVal = outputHolder.innerText.trim();
       }
       if(firstAction && outVal !== ''){
-        previousData = outputHolder.value.trim();
+        previousData = outVal;
         firstAction = false;
       }
       outputHolder.setAttribute(
