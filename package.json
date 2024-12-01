@@ -1,6 +1,6 @@
 {
   "name": "speech-into-text",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "SpeechToText is a lightweight, multi-language voice-to-text tool for real-time transcription in web apps.",
   "main": "index.js",
   "type": "module",
