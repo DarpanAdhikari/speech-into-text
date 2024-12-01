@@ -155,10 +155,8 @@ export async function speechToText(
     }
   };
   outputHolder.addEventListener('blur',(e)=>{
-    if (!previousData.endsWith(text.trim())) {
       previousData = '';
       previousData = outputHolder.value.trim();
-    }
   });
   spRec.onerror = (event) => {
     console.error("Speech recognition error", event.error);
