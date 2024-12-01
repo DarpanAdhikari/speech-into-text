@@ -165,7 +165,14 @@ export async function speechToText(
     isSpeaking = false;
     if (!previousData.endsWith(text.trim())) {
       previousData = '';
-      previousData = outputHolder.value.trim();
+      if (
+        outputHolder.tagName === "INPUT" ||
+        outputHolder.tagName === "TEXTAREA"
+      ){
+        previousData = outputHolder.value.trim();
+      }else{
+        previousData = outputHolder.innerText.trim();
+      }
     }
   };
   outputHolder.addEventListener('blur', (e) => {
@@ -196,8 +203,17 @@ export async function speechToText(
 
   copyBtnEl?.addEventListener("click", () => {
     let buttonText = copyBtnEl.innerText.trim();
-    if (outputHolder.value.trim() !== "") {
-      navigator.clipboard.writeText(outputHolder.value);
+    let outVal = '';
+    if (
+      outputHolder.tagName === "INPUT" ||
+      outputHolder.tagName === "TEXTAREA"
+    ){
+      outVal = outputHolder.value.trim();
+    }else{
+      outVal = outputHolder.innerText.trim();
+    }
+    if (outVal !== "") {
+      navigator.clipboard.writeText(outVal);
       copyBtnEl.textContent = "Copied!";
       setTimeout(() => {
         copyBtnEl.textContent = buttonText;
