@@ -118,7 +118,16 @@ export async function speechToText(
     if (!isSpeaking) {
       spRec.start();
       isSpeaking = true;
-      if(firstAction && outputHolder.value.trim() !== ''){
+      let outVal = '';
+      if (
+        outputHolder.tagName === "INPUT" ||
+        outputHolder.tagName === "TEXTAREA"
+      ) {
+        outVal = outputHolder.value.trim();
+      }else{
+        outVal = outputHolder.innerText.trim();
+      }
+      if(firstAction && outVal !== ''){
         previousData = outputHolder.value.trim();
         firstAction = false;
       }
