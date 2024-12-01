@@ -112,11 +112,16 @@ export async function speechToText(
   css.innerHTML = btnStyle;
   document.head.appendChild(css);
   let isSpeaking = false;
+  let firstAction = true;
   let previousData = "";
   startBtnEl.addEventListener("click", () => {
     if (!isSpeaking) {
       spRec.start();
       isSpeaking = true;
+      if(firstAction && outputHolder.value.trim() !== ''){
+        previousData = outputHolder.value.trim();
+        firstAction = false;
+      }
       outputHolder.setAttribute(
         "placeholder",
         languagePlaceholders[langSelect.value] || "Start speaking..."
