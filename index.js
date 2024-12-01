@@ -81,11 +81,13 @@ export async function speechToText(
   }
 
   spRec.lang = langSelect.value;
-  outputHolder.setAttribute("placeholder", languagePlaceholders[langSelect.value] || "Start speaking...");
-  
+  outputHolder.setAttribute(
+    "placeholder",
+    languagePlaceholders[langSelect.value] || "Start speaking..."
+  );
+
   langSelect.addEventListener("change", () => {
     spRec.stop();
-    previousData = outputHolder.value.trim();
     spRec.lang = langSelect.value;
     outputHolder.setAttribute(
       "placeholder",
@@ -93,23 +95,23 @@ export async function speechToText(
     );
   });
 
-  let isSpeaking = false;
   let btnStyle = `#${startBtn},#${clearBtn},#${copyBtn} {
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      }
-      
-      #${startBtn}:hover,#${clearBtn}:hover,#${copyBtn}:hover {
-        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
-        transform: translateY(-2px);
-      }
-      
-      #${startBtn}:active,#${clearBtn}:active,#${copyBtn}:active {
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  #${startBtn}:hover,#${clearBtn}:hover,#${copyBtn}:hover {
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+  }
+  
+  #${startBtn}:active,#${clearBtn}:active,#${copyBtn}:active {
         transform: translateY(1px);
       }`;
   const css = document.createElement("style");
   css.innerHTML = btnStyle;
   document.head.appendChild(css);
+  let isSpeaking = false;
   let previousData = "";
   startBtnEl.addEventListener("click", () => {
     if (!isSpeaking) {
@@ -121,14 +123,12 @@ export async function speechToText(
       );
     } else {
       spRec.stop();
-      previousData = '';
-      previousData = outputHolder.value.trim();
       isSpeaking = false;
     }
   });
-
+  let text = '';
   spRec.onresult = (res) => {
-    let text = Array.from(res.results)
+    text = Array.from(res.results)
       .map((r) => r[0])
       .map((txt) => txt.transcript)
       .join("");
@@ -137,17 +137,29 @@ export async function speechToText(
       outputHolder.tagName === "INPUT" ||
       outputHolder.tagName === "TEXTAREA"
     ) {
-      outputHolder.value = previousData + " " + text;
+      if (!previousData.endsWith(text.trim())) {
+        outputHolder.value = previousData + " " + text;
+      }
     } else {
-      outputHolder.innerText = previousData + " " + text;
+      if (!previousData.endsWith(text.trim())) {
+        outputHolder.innerText = previousData + " " + text;
+      }
     }
   };
 
   spRec.onspeechend = () => {
-    previousData = outputHolder.value.trim();
     isSpeaking = false;
+    if (!previousData.endsWith(text.trim())) {
+      previousData = '';
+      previousData = outputHolder.value.trim();
+    }
   };
-
+  outputHolder.addEventListener('blur',(e)=>{
+    if (!previousData.endsWith(text.trim())) {
+      previousData = '';
+      previousData = outputHolder.value.trim();
+    }
+  });
   spRec.onerror = (event) => {
     console.error("Speech recognition error", event.error);
   };
@@ -175,7 +187,7 @@ export async function speechToText(
     }
   });
   window.addEventListener("beforeunload", (event) => {
-    sessionStorage.setItem("language",langSelect.value);
+    sessionStorage.setItem("language", langSelect.value);
     if (outputHolder.value !== "") {
       event.preventDefault();
     }
