@@ -33,8 +33,8 @@ To use **SpeechToText**, ensure the following elements are in your HTML:
 ```html  
 <div>  
   <!-- Text Output Area -->
-  <!-- when start, it will place class="listening" on element that have id="indicator" -->
-  <div id='indicator' class="listening">
+  <!-- when start, it will place class="listening" on element that have class="indicator" -->
+  <div class="indicator listening">
     <textarea id="outPut" placeholder="Start speaking..." rows="5"></textarea>
   </div>
   <!-- works with div or any html tag -->

@@ -163,7 +163,7 @@ export async function speechToText(
 
   spRec.onspeechend = () => {
     isSpeaking = false;
-    document.querySelector('#indicator')?.classList.remove('listening');
+    document.querySelector('.indicator')?.classList.remove('listening');
     if (!previousData.endsWith(text.trim())) {
       previousData = '';
       if (
@@ -177,7 +177,7 @@ export async function speechToText(
     }
   };
   spRec.onspeechstart = () => {
-    document.querySelector('#indicator')?.classList.add('listening');
+    document.querySelector('.indicator')?.classList.add('listening');
 };
   outputHolder.addEventListener('blur', (e) => {
     if (
