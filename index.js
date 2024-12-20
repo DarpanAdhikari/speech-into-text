@@ -29,7 +29,7 @@ export async function speechToText(
         } else {
           console.error("incomplete html format missing language select");
         }
-        alert("Something missing please check document");
+        alert("Button or Required field not available,check document once!");
         window.open("https://github.com/DarpanAdhikari/speech-into-text?tab=readme-ov-file#getting-started","_blank");
         return;
       }
