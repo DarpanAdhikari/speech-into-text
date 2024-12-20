@@ -2,14 +2,23 @@ export async function speechToText(
   outPut,
   clearBtn,
   startBtn,
+  stopBtn,
   copyBtn,
   langSelection
 ) {
-  const outputHolder = document.getElementById(outPut),
-    startBtnEl = document.getElementById(startBtn),
-    clearBtnEl = document.getElementById(clearBtn),
-    copyBtnEl = document.getElementById(copyBtn),
-    langSelect = document.getElementById(langSelection);
+  let speachRec = window.webkitSpeechRecognition || window.SpeechRecognition;
+
+  if (!speachRec) {
+    alert("Speech Recognition API is not supported in this browser.");
+    console.error("Speech Recognition API is unsupported.");
+    return;
+  }
+  const outputHolder = document.querySelector(outPut),
+    startBtnEl = document.querySelector(startBtn),
+    stopBtnEl = document.querySelector(stopBtn),
+    clearBtnEl = document.querySelector(clearBtn),
+    copyBtnEl = document.querySelector(copyBtn),
+    langSelect = document.querySelector(langSelection);
 
   if (!startBtnEl || !outputHolder || !langSelect) {
     if (!startBtnEl) {
@@ -28,8 +37,14 @@ export async function speechToText(
     alert("Speech Recognition API is not supported in this browser.");
     return;
   }
-
-  let spRec = new sr();
+  let spRec;
+  try {
+    spRec = new sr();
+    console.log("Speech Recognition initialized successfully.");
+  } catch (error) {
+    console.error("Failed to initialize Speech Recognition:", error);
+    return;
+  }
   spRec.continuous = true;
   spRec.interimResults = true;
 
@@ -67,9 +82,9 @@ export async function speechToText(
     "id-ID": "Mulai berbicara...",
     "ta-IN": "பேசத் தொடங்குங்கள்...",
     "ml-IN": "പറയാൻ ആരംഭിക്കൂ...",
-};
+  };
 
-const languages = [
+  const languages = [
     { code: "en-US", name: "English (United States)" },
     { code: "ne-NP", name: "Nepali (Nepal)" },
     { code: "en-GB", name: "English (United Kingdom)" },
@@ -104,40 +119,48 @@ const languages = [
     { code: "id-ID", name: "Indonesian (Indonesia)" },
     { code: "ta-IN", name: "Tamil (India)" },
     { code: "ml-IN", name: "Malayalam (India)" },
-];
-
-  langSelect.innerHTML = "";
-  languages.forEach((lang) => {
-    const option = document.createElement("option");
-    option.value = lang.code;
-    option.textContent = lang.name;
-    langSelect.appendChild(option);
-  });
-
-  const langStored = sessionStorage.getItem("language");
-  const langOptions = langSelect.querySelectorAll("option");
-  if (langSelect && langSelect !== "" && langOptions.length > 0) {
-    langSelect.querySelectorAll("option").forEach((opt) => {
-      if (opt.value == langStored) {
-        opt.selected = true;
-      }
+  ];
+  let selectedLanguage;
+  const LangExists = languages.some(
+    (language) => language.code === langSelection
+  );
+  if (langSelect && langSelect.tagName === "SELECT") {
+    langSelect.innerHTML = "";
+    languages.forEach((lang) => {
+      const option = document.createElement("option");
+      option.value = lang.code;
+      option.textContent = lang.name;
+      langSelect.appendChild(option);
     });
+    const langStored = sessionStorage.getItem("language");
+    const langOptions = langSelect.querySelectorAll("option");
+    if (langSelect && langSelect !== "" && langOptions.length > 0) {
+      langSelect.querySelectorAll("option").forEach((opt) => {
+        if (opt.value == langStored) {
+          opt.selected = true;
+        }
+      });
+    }
+    selectedLanguage = langSelect.value;
+    langSelect.addEventListener("change", () => {
+      spRec.stop();
+      spRec.lang = selectedLanguage;
+      outputHolder.setAttribute(
+        "placeholder",
+        languagePlaceholders[selectedLanguage] || "Start speaking..."
+      );
+    });
+  } else if (LangExists) {
+    selectedLanguage = langSelection;
+  } else {
+    return;
   }
 
-  spRec.lang = langSelect.value;
+  spRec.lang = selectedLanguage;
   outputHolder.setAttribute(
     "placeholder",
-    languagePlaceholders[langSelect.value] || "Start speaking..."
+    languagePlaceholders[selectedLanguage] || "Start speaking..."
   );
-
-  langSelect.addEventListener("change", () => {
-    spRec.stop();
-    spRec.lang = langSelect.value;
-    outputHolder.setAttribute(
-      "placeholder",
-      languagePlaceholders[langSelect.value] || "Start speaking..."
-    );
-  });
 
   let btnStyle = `#${startBtn},#${clearBtn},#${copyBtn} {
     transition: all 0.3s ease;
@@ -162,68 +185,74 @@ const languages = [
     if (!isSpeaking) {
       spRec.start();
       isSpeaking = true;
-      let outVal = '';
+      let outVal = "";
       if (
         outputHolder.tagName === "INPUT" ||
         outputHolder.tagName === "TEXTAREA"
       ) {
         outVal = outputHolder.value.trim();
-      }else{
+      } else {
         outVal = outputHolder.innerHTML.trim();
       }
-      if(firstAction && outVal !== ''){
+      if (firstAction && outVal !== "") {
         previousData = outVal;
         firstAction = false;
       }
       outputHolder.setAttribute(
         "placeholder",
-        languagePlaceholders[langSelect.value] || "Start speaking..."
+        languagePlaceholders[selectedLanguage] || "Start speaking..."
       );
     } else {
       spRec.stop();
       isSpeaking = false;
     }
   });
-  let text = '';
+  let text = "";
   spRec.onresult = (res) => {
     text = Array.from(res.results)
-      .map((r) => r[0])
-      .map((txt) => txt.transcript)
-      .join("");
+      .map((r) => r[0]?.transcript || "")
+      .join(" ");
 
     if (
       outputHolder.tagName === "INPUT" ||
       outputHolder.tagName === "TEXTAREA"
     ) {
-      if (!previousData.endsWith(text.trim())) {
-        outputHolder.value = previousData + " " + text;
-      }
+      const trimmedText = (previousData + " " + text).trim();
+      if (!previousData.endsWith(text.trim())) outputHolder.value = trimmedText;
     } else {
-      if (!previousData.endsWith(text.trim())) {
-        outputHolder.innerHTML = previousData + " " + text;
-      }
+      const trimmedText = (previousData + " " + text).trim();
+      if (!previousData.endsWith(text.trim()))
+        outputHolder.innerHTML = trimmedText;
     }
+    previousData = trimmedText;
   };
 
   spRec.onspeechend = () => {
     isSpeaking = false;
-    document.querySelector('.indicator')?.classList.remove('listening');
+    document.querySelector(".indicator")?.classList.remove("listening");
     if (!previousData.endsWith(text.trim())) {
-      previousData = '';
+      previousData = "";
       if (
         outputHolder.tagName === "INPUT" ||
         outputHolder.tagName === "TEXTAREA"
-      ){
+      ) {
         previousData = outputHolder.value.trim();
-      }else{
+      } else {
         previousData = outputHolder.innerHTML.trim();
       }
     }
   };
   spRec.onspeechstart = () => {
-    document.querySelector('.indicator')?.classList.add('listening');
-};
-  outputHolder.addEventListener('blur', (e) => {
+    isSpeaking = true;
+    document.querySelector(".indicator")?.classList.add("listening");
+  };
+  stopBtnEl?.addEventListener("click", (e) => {
+    if (isSpeaking) {
+      spRec.stop();
+      isSpeaking = false;
+    }
+  });
+  outputHolder.addEventListener("blur", (e) => {
     if (
       outputHolder.tagName === "INPUT" ||
       outputHolder.tagName === "TEXTAREA"
@@ -251,13 +280,13 @@ const languages = [
 
   copyBtnEl?.addEventListener("click", () => {
     let buttonText = copyBtnEl.innerHTML.trim();
-    let outVal = '';
+    let outVal = "";
     if (
       outputHolder.tagName === "INPUT" ||
       outputHolder.tagName === "TEXTAREA"
-    ){
+    ) {
       outVal = outputHolder.value.trim();
-    }else{
+    } else {
       outVal = outputHolder.innerHTML.trim();
     }
     if (outVal !== "") {
@@ -269,6 +298,6 @@ const languages = [
     }
   });
   window.addEventListener("beforeunload", (event) => {
-    sessionStorage.setItem("language", langSelect.value);
+    sessionStorage.setItem("language", selectedLanguage);
   });
 }
