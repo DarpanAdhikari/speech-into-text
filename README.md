@@ -1,6 +1,6 @@
 # SpeechToText NPM Package  
 
-**SpeechToText** is a lightweight, multi-language voice-to-text conversion package designed for seamless integration into web applications. It supports customization, works with both `<textarea>` and `<div>`, and can be used via NPM or CDN. [Demo](https://intotext.darpanadhikari.com.np)  
+**SpeechToText** is a lightweight, multi-language voice-to-text conversion package designed for seamless integration into web applications. It supports customization, works with both `<textarea>` and `<div>`, and can be used via NPM or CDN. [Demo](http://document.darpanadhikari.com.np/)  
 
 ## Features  
 
