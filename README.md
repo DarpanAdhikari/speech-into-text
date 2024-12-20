@@ -11,7 +11,7 @@
 - **Language Preserve**: Selected language remains selected on reload.  
 - **Versatile Button Selectors**: Pass selectors like `id`, `class`, or `tag` for buttons and dropdowns.  
 - **Clicky Buttons**: CSS is integrated to make buttons visually appealing.  
-- **Listening effect** : Add a listening class with CSS animations to the class="indicator" element to visually signal active speech recognition..
+- **Listening effect** : Add a listening class with CSS animations to the indicator element to visually signal active speech recognition..
 
 ---
 
@@ -59,54 +59,38 @@ Include the package via a CDN if installation is not preferred:
 <script type="module" src="script.js"></script>  
 ```  
 
-#### Full Setup  
+#### Setup  
 ```javascript  
 import { speechToText } from 'https://unpkg.com/speech-into-text@latest/index.js';  
 speechToText({
  outPut:'#outPut',
  startBtn:'#startBtn',
+ langSelection:'#langSelection'// or for specific langanguage use code like langSelection:"ne-NP"
+ // other are optional include any of those if required
  stopBtn:'#stopBtn',
  clearBtn:"#clearBtn", 
- langSelection:'#langSelection'// or for specific langanguage use code like langSelection:"ne-NP"
  copyBtn:"#copyBtn",
- });  
-```  
-
-#### Minimal Setup  
-```javascript  
-import { speechToText } from 'https://unpkg.com/speech-into-text@latest/index.js';  
-speechToText({
- outPut:'#outPut',
- startBtn:'#startBtn', 
- langSelection:'#langSelection'// or for specific langanguage use code like langSelection:"ne-NP"
- });  
+ recIndicator:"#indicator", //optional add css to view change on its class "listening"
+ });   
 ```  
 
 ### Using NPM Package  
 
 Initialize the `speechToText` function with the appropriate selectors:  
 
-#### Full Setup  
+#### Setup  
 ```javascript  
 import { speechToText } from 'speech-into-text';  
 speechToText({
  outPut:'#outPut',
  startBtn:'#startBtn',
+ langSelection:'#langSelection',// or for specific langanguage use code like langSelection:"ne-NP"
+ // other are optional include any of those if required
  stopBtn:'#stopBtn',
  clearBtn:"#clearBtn", 
- langSelection:'#langSelection'// or for specific langanguage use code like langSelection:"ne-NP"
  copyBtn:"#copyBtn",
+ recIndicator:"#indicator", //optional add css to view change on its class "listening"
  });
-```  
-
-#### Minimal Setup  
-```javascript  
-import { speechToText } from 'speech-into-text';  
-speechToText({
- outPut:'#outPut',
- startBtn:'#startBtn', 
- langSelection:'#langSelection'// or for specific langanguage use code like langSelection:"ne-NP"
- }); 
 ```  
 
 ---

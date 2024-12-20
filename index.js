@@ -4,7 +4,8 @@ export async function speechToText(
   startBtn,
   stopBtn,
   copyBtn,
-  langSelection
+  langSelection,
+  recIndicator,
 }) {
   let speachRec = window.webkitSpeechRecognition || window.SpeechRecognition;
   
@@ -18,6 +19,7 @@ export async function speechToText(
       stopBtnEl = stopBtn ? document.querySelector(stopBtn) : null,
       clearBtnEl = clearBtn ? document.querySelector(clearBtn):null,
       copyBtnEl = copyBtn ? document.querySelector(copyBtn) : null,
+      indicatorEl = recIndicator ? document.querySelector(recIndicator) : null,
       langSelect = document.querySelector(langSelection);
       if (!startBtnEl || !outputHolder || !langSelection) {
         if (!startBtnEl) {
@@ -80,41 +82,41 @@ export async function speechToText(
     };
     
     const languages = [
-        { code: "en-US", name: "English (United States)" },
-        { code: "ne-NP", name: "Nepali (Nepal)" },
-        { code: "en-GB", name: "English (United Kingdom)" },
-        { code: "es-ES", name: "Spanish (Spain)" },
-        { code: "fr-FR", name: "French (France)" },
-        { code: "de-DE", name: "German (Germany)" },
-        { code: "hi-IN", name: "Hindi (India)" },
-        { code: "ja-JP", name: "Japanese (Japan)" },
-        { code: "ko-KR", name: "Korean (Korea)" },
-        { code: "zh-CN", name: "Chinese (China)" },
-        { code: "pt-PT", name: "Portuguese (Portugal)" },
-        { code: "ru-RU", name: "Russian (Russia)" },
-        { code: "ar-SA", name: "Arabic (Saudi Arabia)" },
-        { code: "it-IT", name: "Italian (Italy)" },
-        { code: "tr-TR", name: "Turkish (Turkey)" },
-        { code: "pl-PL", name: "Polish (Poland)" },
-        { code: "nl-NL", name: "Dutch (Netherlands)" },
-        { code: "sv-SE", name: "Swedish (Sweden)" },
-        { code: "da-DK", name: "Danish (Denmark)" },
-        { code: "cs-CZ", name: "Czech (Czech Republic)" },
-        { code: "fi-FI", name: "Finnish (Finland)" },
-        { code: "el-GR", name: "Greek (Greece)" },
-        { code: "th-TH", name: "Thai (Thailand)" },
-        { code: "hu-HU", name: "Hungarian (Hungary)" },
-        { code: "ro-RO", name: "Romanian (Romania)" },
-        { code: "sk-SK", name: "Slovak (Slovakia)" },
-        { code: "hr-HR", name: "Croatian (Croatia)" },
-        { code: "bg-BG", name: "Bulgarian (Bulgaria)" },
-        { code: "sr-RS", name: "Serbian (Serbia)" },
-        { code: "vi-VN", name: "Vietnamese (Vietnam)" },
-        { code: "ms-MY", name: "Malay (Malaysia)" },
-        { code: "id-ID", name: "Indonesian (Indonesia)" },
-        { code: "ta-IN", name: "Tamil (India)" },
-        { code: "ml-IN", name: "Malayalam (India)" },
-    ];
+      { code: "en-US", name: "English (United States)" },
+      { code: "ar-SA", name: "Arabic (Saudi Arabia)" },
+      { code: "bg-BG", name: "Bulgarian (Bulgaria)" },
+      { code: "zh-CN", name: "Chinese (China)" },
+      { code: "hr-HR", name: "Croatian (Croatia)" },
+      { code: "cs-CZ", name: "Czech (Czech Republic)" },
+      { code: "da-DK", name: "Danish (Denmark)" },
+      { code: "nl-NL", name: "Dutch (Netherlands)" },
+      { code: "en-GB", name: "English (United Kingdom)" },
+      { code: "fi-FI", name: "Finnish (Finland)" },
+      { code: "fr-FR", name: "French (France)" },
+      { code: "de-DE", name: "German (Germany)" },
+      { code: "el-GR", name: "Greek (Greece)" },
+      { code: "hi-IN", name: "Hindi (India)" },
+      { code: "ta-IN", name: "Tamil (India)" },
+      { code: "ml-IN", name: "Malayalam (India)" },
+      { code: "hu-HU", name: "Hungarian (Hungary)" },
+      { code: "id-ID", name: "Indonesian (Indonesia)" },
+      { code: "it-IT", name: "Italian (Italy)" },
+      { code: "ja-JP", name: "Japanese (Japan)" },
+      { code: "ko-KR", name: "Korean (Korea)" },
+      { code: "ms-MY", name: "Malay (Malaysia)" },
+      { code: "ne-NP", name: "Nepali (Nepal)" },
+      { code: "pl-PL", name: "Polish (Poland)" },
+      { code: "pt-PT", name: "Portuguese (Portugal)" },
+      { code: "ro-RO", name: "Romanian (Romania)" },
+      { code: "ru-RU", name: "Russian (Russia)" },
+      { code: "sr-RS", name: "Serbian (Serbia)" },
+      { code: "sk-SK", name: "Slovak (Slovakia)" },
+      { code: "es-ES", name: "Spanish (Spain)" },
+      { code: "sv-SE", name: "Swedish (Sweden)" },
+      { code: "th-TH", name: "Thai (Thailand)" },
+      { code: "tr-TR", name: "Turkish (Turkey)" },
+      { code: "vi-VN", name: "Vietnamese (Vietnam)" },
+  ];    
     let selectedLanguage = null;
     const LangExists = languages.some(
       (language) => language.code === langSelection
@@ -140,6 +142,7 @@ export async function speechToText(
       langSelect.addEventListener("change", () => {
         spRec.stop();
         selectedLanguage = langSelect.value;
+        spRec.lang = langSelect.value;
         outputHolder.setAttribute(
           "placeholder",
           languagePlaceholders[selectedLanguage] || "Start speaking..."
@@ -229,7 +232,7 @@ export async function speechToText(
     
       spRec.onspeechend = () => {
         isSpeaking = false;
-        document.querySelector('.indicator')?.classList.remove('listening');
+        indicatorEl?.classList.remove('listening');
         if (!previousData.endsWith(text.trim())) {
           previousData = '';
           if (
@@ -243,7 +246,7 @@ export async function speechToText(
         }
       };
       spRec.onspeechstart = () => {
-        document.querySelector('.indicator')?.classList.add('listening');
+        indicatorEl?.classList.add('listening');
     };
       outputHolder.addEventListener('blur', (e) => {
         if (
