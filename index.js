@@ -163,23 +163,6 @@ export async function speechToText(
         languagePlaceholders[selectedLanguage] || "Start speaking..."
       );
     
-    
-      let btnStyle = `#${startBtn},#${clearBtn},#${copyBtn} {
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      }
-      
-      #${startBtn}:hover,#${clearBtn}:hover,#${copyBtn}:hover {
-        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
-        transform: translateY(-2px);
-      }
-      
-      #${startBtn}:active,#${clearBtn}:active,#${copyBtn}:active {
-            transform: translateY(1px);
-          }`;
-      const css = document.createElement("style");
-      css.innerHTML = btnStyle;
-      document.head.appendChild(css);
       let isSpeaking = false;
       let firstAction = true;
       let previousData = "";
