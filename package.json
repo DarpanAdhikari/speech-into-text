@@ -17,7 +17,11 @@
     "transcription",
     "voice-recognition",
     "into-text",
-    "multi-language"
+    "multi-language",
+    "speech to text",
+    "speak and text",
+    "text",
+    "speech"
   ],
   "author": "Darpan Adhikari",
   "license": "Apache-2.0",

@@ -11,6 +11,7 @@
 - **Language Preserve**: Selected language remains selected on reload.  
 - **Versatile Button Selectors**: Pass selectors like `id`, `class`, or `tag` for buttons and dropdowns.  
 - **Clicky Buttons**: CSS is integrated to make buttons visually appealing.  
+- **Listening effect** : Add a listening class with CSS animations to the class="indicator" element to visually signal active speech recognition..
 
 ---
 
@@ -34,7 +35,7 @@ To use **SpeechToText**, ensure the following elements are in your HTML:
 ```html  
 <div>  
   <!-- Text Output Area -->
-  <div class="indicator listening">
+  <div class="indicator">
     <textarea id="outPut" placeholder="Start speaking..." rows="5"></textarea>
   </div>
   <!-- works with div or any html tag -->
@@ -61,15 +62,24 @@ Include the package via a CDN if installation is not preferred:
 #### Full Setup  
 ```javascript  
 import { speechToText } from 'https://unpkg.com/speech-into-text@latest/index.js';  
-speechToText('outPut', 'clearBtn', 'startBtn', 'stopBtn', 'copyBtn', 'langSelection');  
+speechToText({
+ outPut:'#outPut',
+ startBtn:'#startBtn',
+ stopBtn:'#stopBtn',
+ clearBtn:"#clearBtn", 
+ langSelection:'#langSelection'// or for specific langanguage use code like langSelection:"ne-NP"
+ copyBtn:"#copyBtn",
+ });  
 ```  
 
 #### Minimal Setup  
 ```javascript  
 import { speechToText } from 'https://unpkg.com/speech-into-text@latest/index.js';  
-speechToText('outPut', '', 'startBtn', '', '', 'langSelection');  
-//if there is no lang selection required 
-// speechToText('outPut', '', 'startBtn', '', '', 'en-US'); 
+speechToText({
+ outPut:'#outPut',
+ startBtn:'#startBtn', 
+ langSelection:'#langSelection'// or for specific langanguage use code like langSelection:"ne-NP"
+ });  
 ```  
 
 ### Using NPM Package  
@@ -79,17 +89,24 @@ Initialize the `speechToText` function with the appropriate selectors:
 #### Full Setup  
 ```javascript  
 import { speechToText } from 'speech-into-text';  
-speechToText('outPut', 'clearBtn', 'startBtn', 'stopBtn', 'copyBtn', 'langSelection');  
-//if there is no lang selection required 
-// speechToText('outPut', 'clearBtn', 'startBtn', 'stopBtn', 'copyBtn', 'en-US'); 
+speechToText({
+ outPut:'#outPut',
+ startBtn:'#startBtn',
+ stopBtn:'#stopBtn',
+ clearBtn:"#clearBtn", 
+ langSelection:'#langSelection'// or for specific langanguage use code like langSelection:"ne-NP"
+ copyBtn:"#copyBtn",
+ });
 ```  
 
 #### Minimal Setup  
 ```javascript  
 import { speechToText } from 'speech-into-text';  
-speechToText('outPut', '', 'startBtn', '', 'langSelection');  
-//if there is no lang selection required 
-// speechToText('outPut', '', 'startBtn', '', '', 'en-US'); 
+speechToText({
+ outPut:'#outPut',
+ startBtn:'#startBtn', 
+ langSelection:'#langSelection'// or for specific langanguage use code like langSelection:"ne-NP"
+ }); 
 ```  
 
 ---
