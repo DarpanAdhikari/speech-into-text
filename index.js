@@ -213,7 +213,7 @@ export async function speechToText(
         }
       };
     
-      spRec.onspeechend = () => {
+      spRec.onend = () => {
         isSpeaking = false;
         indicatorEl?.classList.remove('listening');
         if (!previousData.endsWith(text.trim())) {
@@ -228,7 +228,7 @@ export async function speechToText(
           }
         }
       };
-      spRec.onspeechstart = () => {
+      spRec.onstart = () => {
         indicatorEl?.classList.add('listening');
     };
       outputHolder.addEventListener('blur', (e) => {
