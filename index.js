@@ -220,10 +220,15 @@ export async function speechToText({
       }
   }
   spRec.onend = () => {
-    if (isSpeaking) {
+    if (isSpeaking && !isMobileDevice()) {
       spRec.start();
     }
   };
+  
+  function isMobileDevice() {
+    return /Mobi|Android/i.test(navigator.userAgent);
+  }
+  
   function listeningIsStoped() {
     isSpeaking = false;
     document.querySelector(".indicator")?.classList.remove("listening");
