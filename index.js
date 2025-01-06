@@ -256,10 +256,35 @@ export async function speechToText({
   spRec.onerror = (event) => {
     setPreviousData();
     console.error("Speech recognition error", event.error);
+    const warningDiv = document.createElement("div");
+    warningDiv.id = "warningDiv";
+    warningDiv.textContent =
+      "We found some error while listening to the voice. Voice typing is still working.";
+    warningDiv.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      width: max-content;
+      background-color: #ffcc00;
+      color: #000;
+      text-align: center;
+      padding: 10px;
+      font-size: 16px;
+      z-index: 1000;
+      border: 1px solid #000;
+      border-radius: 5px;
+    `;
+    document.body.appendChild(warningDiv);
+    setTimeout(() => {
+      warningDiv.remove();
+    }, 5000);
     if (event.error === "not-allowed") {
       alert("Microphone access denied. Please allow microphone permissions.");
     }
   };
+  
   stopBtnEl?.addEventListener("click", () => {
     if (isSpeaking) {
       spRec.stop();
